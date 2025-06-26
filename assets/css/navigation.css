@@ -218,11 +218,11 @@
     margin-bottom: 1rem;
 }
 .footer-v2__read-more {
-    color: #c0b09a;
+    color: #007BFF;
     font-weight: 600;
 }
 .footer-v2__read-more:hover {
-    color: #ffffff;
+    color: #2563EB;
 }
 
 /* Partner Section */
@@ -255,12 +255,12 @@
     opacity: 1;
 }
 .footer-v2__partner-see-all {
-    color: #c0b09a;
+    color: #007BFF;
     font-weight: 600;
     white-space: nowrap;
 }
 .footer-v2__partner-see-all:hover {
-    color: #ffffff;
+    color: #2563EB;
 }
 
 /* Bottom Bar */
