@@ -160,3 +160,133 @@
     width: 2rem;
     height: 2rem;
 }
+/* ===========================================================
+   Footer V2 Styles (Simplified)
+   =========================================================== */
+.site-footer-v2-simplified {
+    background-color: #1a1a1a;
+    color: #9CA3AF;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding-top: 5rem; /* Added padding to compensate for removed top section */
+}
+
+.site-footer-v2-simplified .container {
+    max-width: 1200px;
+}
+
+/* Main Section */
+.footer-v2__main-section {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #333333;
+}
+.footer-v2__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+}
+.footer-v2__column-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+.footer-v2__link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.footer-v2__link {
+    color: #9CA3AF;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+.footer-v2__link:hover {
+    color: #ffffff;
+    padding-left: 5px;
+}
+.footer-v2__brand-name {
+    display: block;
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.footer-v2__brand-description {
+    margin-bottom: 1rem;
+}
+.footer-v2__read-more {
+    color: #c0b09a;
+    font-weight: 600;
+}
+.footer-v2__read-more:hover {
+    color: #ffffff;
+}
+
+/* Partner Section */
+.footer-v2__partner-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid #333333;
+}
+.footer-v2__partner-label {
+    font-weight: 600;
+    color: #ffffff;
+}
+.footer-v2__partner-logos {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+.footer-v2__partner-logo {
+    height: 25px;
+    filter: grayscale(1) brightness(1.5);
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+.footer-v2__partner-logo:hover {
+    opacity: 1;
+}
+.footer-v2__partner-see-all {
+    color: #c0b09a;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.footer-v2__partner-see-all:hover {
+    color: #ffffff;
+}
+
+/* Bottom Bar */
+.footer-v2__bottom-bar {
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center; /* Centered since the right-side links are gone */
+    align-items: center;
+    text-align: center;
+}
+
+/* Responsive Grid */
+@media (min-width: 768px) {
+    .footer-v2__grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .footer-v2__column--brand {
+        grid-column: span 2;
+    }
+}
+@media (min-width: 992px) {
+    .footer-v2__grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 2rem;
+    }
+     .footer-v2__column--brand {
+        grid-column: span 1;
+    }
+}
