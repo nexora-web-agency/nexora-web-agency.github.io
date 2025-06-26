@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Nexora</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. Global Styles & Resets */
+        *, *::before, *::after { box-sizing: border-box; }
+        body, h1, h2, h3, p, ul, figure, footer { margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* 2. Reusable Component Styles */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .section {
+            padding: 5rem 0;
+            overflow-x: hidden;
+        }
+        .section-header {
+            text-align: center;
+            max-width: 768px;
+            margin: 0 auto 4rem;
+        }
+        .section-header__title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+        }
+        .section-header__subtitle {
+            margin-top: 1rem;
+            font-size: 1.125rem;
+            color: #9CA3AF;
+        }
+        @media (min-width: 640px) {
+            .container { padding: 0 1.5rem; }
+            .section { padding: 6rem 0; }
+            .section-header__title { font-size: 3rem; }
+        }
+        @media (min-width: 1024px) {
+            .container { padding: 0 2rem; }
+        }
+
+        /* 3. Animation Styles */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 4. Contact Page Styles */
+        .contact-layout {
+            display: grid;
+            gap: 4rem;
+            background-color: #1E1E1E;
+            padding: 3rem;
+            border-radius: 1rem;
+            border: 1px solid #333333;
+        }
+        @media (min-width: 1024px) {
+            .contact-layout {
+                grid-template-columns: 2fr 1fr;
+                padding: 4rem;
+            }
+        }
+        
+        /* Contact Form */
+        .contact-form__title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+        .contact-form .form-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #9CA3AF;
+        }
+        .form-input, .form-textarea {
+            display: block;
+            width: 100%;
+            background-color: #121212;
+            border: 1px solid #333333;
+            border-radius: 0.375rem;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+        .form-input:focus, .form-textarea:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .form-submit {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+        }
+        .form-submit:hover {
+            background-color: #2563EB;
+            transform: translateY(-0.25rem);
+        }
+        @media (min-width: 640px) {
+            .contact-form .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-group-full {
+                grid-column: 1 / -1;
+            }
+        }
+        
+        /* Contact Info */
+        .contact-info__title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+        .contact-info__list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .contact-info__item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .contact-info__icon-wrapper {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: #121212;
+            border: 1px solid #333333;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-info__icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #007BFF;
+        }
+        .contact-info__label {
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .contact-info__value {
+            margin-top: 0.25rem;
+            color: #9CA3AF;
+            transition: color 0.3s ease;
+        }
+        .contact-info__value:hover {
+            color: #007BFF;
+        }
+        .contact-info__social-links {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .contact-info__social-link { color: #9CA3AF; transition: color 0.3s ease; }
+        .contact-info__social-link:hover { color: #ffffff; }
+        .contact-info__social-icon { height: 1.5rem; width: 1.5rem; }
+
+        /* Map Section */
+        .map-section {
+            margin-top: 5rem;
+        }
+        .map-wrapper {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #333333;
+        }
+        .map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: invert(90%) grayscale(100%); /* Inverts colors for a dark theme map */
+        }
+        
+        /* Footer (reused) */
+        .site-footer { background-color: #1E1E1E; border-top: 1px solid #333333; }
+        .site-footer__main { padding: 3rem 0; }
+        .site-footer__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .site-footer__brand-area { grid-column: span 2 / span 2; }
+        .site-footer__brand-name { font-size: 1.5rem; font-weight: 700; color: #ffffff; }
+        .site-footer__brand-tagline { margin-top: 0.5rem; font-size: 0.875rem; color: #9CA3AF; }
+        .site-footer__nav-title { font-size: 0.875rem; font-weight: 600; color: #9CA3AF; letter-spacing: 0.05em; text-transform: uppercase; }
+        .site-footer__nav-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .site-footer__nav-link, .site-footer__contact-link { color: #D1D5DB; transition: color 0.3s ease; }
+        .site-footer__nav-link:hover, .site-footer__contact-link:hover { color: #ffffff; }
+        .site-footer__social-links { margin-top: 1rem; display: flex; gap: 1rem; }
+        .site-footer__social-link { color: #9CA3AF; transition: color 0.3s ease; }
+        .site-footer__social-link:hover { color: #ffffff; }
+        .site-footer__social-icon { height: 1.5rem; width: 1.5rem; }
+        .site-footer__bottom-bar { margin-top: 2rem; border-top: 1px solid #333333; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; color: #9CA3AF; }
+        .site-footer__bottom-link:hover { color: #ffffff; }
+        @media (min-width: 768px) {
+            .site-footer__grid { grid-template-columns: repeat(4, 1fr); }
+            .site-footer__brand-area { grid-column: span 2 / span 2; }
+            .site-footer__nav-group--socials { grid-column-start: 4; }
+        }
+        @media (min-width: 1024px) {
+            .site-footer__grid { grid-template-columns: repeat(5, 1fr); }
+            .site-footer__brand-area { grid-column: span 1 / span 1; }
+            .site-footer__nav-group--socials { grid-column-start: 5; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <header class="section-header animate-on-scroll">
+                    <h1 class="section-header__title">Let's Start a Conversation</h1>
+                    <p class="section-header__subtitle">We're here to answer your questions, discuss your project, or explore how we can work together. Reach out, and we'll get back to you within one business day.</p>
+                </header>
+
+                <div class="contact-layout animate-on-scroll">
+                    <div class="contact-form">
+                        <h2 class="contact-form__title">Send Us a Message</h2>
+                        <form action="#" method="POST">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" id="name" name="name" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Work Email</label>
+                                    <input type="email" id="email" name="email" required class="form-input">
+                                </div>
+                                <div class="form-group form-group-full">
+                                    <label for="company" class="form-label">Company Name (Optional)</label>
+                                    <input type="text" id="company" name="company" class="form-input">
+                                </div>
+                                <div class="form-group form-group-full">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea id="message" name="message" required class="form-textarea" placeholder="Tell us about your project..."></textarea>
+                                </div>
+                                <div class="form-group-full">
+                                    <button type="submit" class="form-submit">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="contact-info">
+                        <h2 class="contact-info__title">Contact Details</h2>
+                        <ul class="contact-info__list">
+                            <li class="contact-info__item">
+                                <div class="contact-info__icon-wrapper">
+                                    <svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                                </div>
+                                <div>
+                                    <p class="contact-info__label">Email Us</p>
+                                    <a href="mailto:hello@nexora.com" class="contact-info__value">hello@nexora.com</a>
+                                </div>
+                            </li>
+                             <li class="contact-info__item">
+                                <div class="contact-info__icon-wrapper">
+                                    <svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                                </div>
+                                <div>
+                                    <p class="contact-info__label">Call Us</p>
+                                    <a href="tel:+1234567890" class="contact-info__value">(123) 456-7890</a>
+                                </div>
+                            </li>
+                            <li class="contact-info__item">
+                                <div class="contact-info__icon-wrapper">
+                                    <svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+                                </div>
+                                <div>
+                                    <p class="contact-info__label">Our Office</p>
+                                    <p class="contact-info__value">123 Innovation Drive, Tech City, 12345</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="contact-info__social-links">
+                            <a href="#" class="contact-info__social-link" aria-label="Twitter"><svg class="contact-info__social-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg></a>
+                            <a href="#" class="contact-info__social-link" aria-label="LinkedIn"><svg class="contact-info__social-icon" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" /></svg></a>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedElements.forEach(el => observer.observe(el));
+            } else {
+                animatedElements.forEach(el => el.classList.add('is-visible'));
+            }
+        });
+    </script>
+</body>
+</html>
