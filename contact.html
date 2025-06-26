@@ -1,546 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Nexora</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. Global Styles & Resets */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { height: 100%; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+        }
+        main { flex-grow: 1; }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contact Us - Nexora</title>
+        /* 2. Reusable Component Styles */
+        .container {
+            
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding:  1rem;
+        }
+        .main-content-section {
+            margin-top: 80px;
+            display: flex;
+            align-items: center; /* Vertically centers the content */
+            justify-content: center;
+            flex-grow: 1;
+            padding: 4rem 0;
+        }
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        /* 3. Animation Styles */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        <style>
-            /* 1. Global Styles & Resets */
-            *,
-            *::before,
-            *::after {
-                box-sizing: border-box;
+        /* 4. New Contact Form Styles */
+        .contact-card {
+            display: grid;
+            background-color: #1E1E1E;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #333333;
+            max-width: 1100px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        .contact-card__left {
+            padding: 2rem 1.5rem;
+            color: #ffffff;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-card__content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-card__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .contact-card__subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .contact-card__services-title {
+            margin-top: 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card__services-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+
+        .contact-card__services-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .contact-card__checkmark {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-card__socials {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .contact-card__social-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .contact-card__social-link svg {
+            width: 1.75rem;
+            height: 1.75rem;
+            color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+        .contact-card__social-link:hover svg {
+            transform: scale(1.1);
+        }
+
+        .contact-card__right {
+            padding: 2rem 1.5rem;
+        }
+
+        .contact-form-v2__title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .contact-form-v2__subtitle {
+            color: #9CA3AF;
+            margin-bottom: 2rem;
+        }
+
+        .contact-form-v2 .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form-v2 .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #9CA3AF;
+        }
+
+        .contact-form-v2 .form-input,
+        .contact-form-v2 .form-textarea {
+            display: block;
+            width: 100%;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 0.5rem;
+            padding: 0.875rem 1rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .contact-form-v2 .form-input::placeholder,
+        .contact-form-v2 .form-textarea::placeholder {
+            color: #6B7280;
+        }
+
+        .contact-form-v2 .form-input:focus,
+        .contact-form-v2 .form-textarea:focus {
+            border-color: #007BFF;
+            background-color: #1E1E1E;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        .contact-form-v2 .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form-v2__grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0 1.5rem;
+        }
+        
+        .form-submit-v2 {
+            width: 100%;
+            background-color: #ffffff;
+            color: #121212;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-submit-v2:hover {
+            background-color: #d1d1d1;
+            transform: translateY(-2px);
+        }
+
+        @media (min-width: 640px) {
+            .contact-form-v2__grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .contact-card {
+                grid-template-columns: 1fr 1.25fr;
             }
 
-            body,
-            h1,
-            h2,
-            h3,
-            p,
-            ul,
-            figure,
-            footer {
-                margin: 0;
-                padding: 0;
+            .contact-card__left,
+            .contact-card__right {
+                padding: 3rem 2.5rem;
             }
 
-            body {
-                font-family: 'Inter', sans-serif;
-                background-color: #121212;
-                color: #E0E0E0;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
+            .contact-card__title, .contact-form-v2__title {
+                font-size: 2rem;
             }
 
-            img {
-                max-width: 100%;
-                display: block;
-            }
-
-            a {
-                text-decoration: none;
-                color: inherit;
-            }
-
-            ul {
-                list-style: none;
-            }
-
-            /* 2. Reusable Component Styles */
-            .container {
-                width: 100%;
-                max-width: 1280px;
-                margin: 0 auto;
-                padding: 0 1rem;
-            }
-
-            .section {
-                padding: 5rem 0;
-                overflow-x: hidden;
-            }
-
-            .section-header {
-                text-align: center;
-                max-width: 768px;
-                margin: 0 auto 4rem;
-            }
-
-            .section-header__title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                letter-spacing: -0.025em;
-                color: #ffffff;
-            }
-
-            .section-header__subtitle {
-                margin-top: 1rem;
+            .contact-card__subtitle {
                 font-size: 1.125rem;
-                color: #9CA3AF;
             }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/navigation.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header__container">
+            <a href="/index.html" class="site-header__brand">NEXORA</a>
+            <nav class="site-header__nav">
+                <ul class="site-header__nav-list">
+                    <li><a href="/about.html" class="site-header__nav-link">About</a></li>
+                    <li><a href="/services.html" class="site-header__nav-link">Services</a></li>
+                    <li><a href="/work.html" class="site-header__nav-link">Work</a></li>
+                    <li><a href="/insights.html" class="site-header__nav-link">Insights</a></li>
+                    <li><a href="/contact.html" class="site-header__nav-link site-header__nav-link--cta">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="site-header__mobile-menu-button" aria-label="Open navigation menu">
+                <svg class="site-header__mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+            </button>
+        </div>
+    </header>
 
-            @media (min-width: 640px) {
-                .container {
-                    padding: 0 1.5rem;
-                }
-
-                .section {
-                    padding: 6rem 0;
-                }
-
-                .section-header__title {
-                    font-size: 3rem;
-                }
-            }
-
-            @media (min-width: 1024px) {
-                .container {
-                    padding: 0 2rem;
-                }
-            }
-
-            /* 3. Animation Styles */
-            .animate-on-scroll {
-                opacity: 0;
-                transform: translateY(30px);
-                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            }
-
-            .animate-on-scroll.is-visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            /* 4. Contact Page Styles */
-            .contact-layout {
-                display: grid;
-                gap: 4rem;
-                background-color: #1E1E1E;
-                padding: 3rem;
-                border-radius: 1rem;
-                border: 1px solid #333333;
-            }
-
-            @media (min-width: 1024px) {
-                .contact-layout {
-                    grid-template-columns: 2fr 1fr;
-                    padding: 4rem;
-                }
-            }
-
-            /* Contact Form */
-            .contact-form__title {
-                font-size: 1.875rem;
-                font-weight: 600;
-                color: #ffffff;
-                margin-bottom: 2rem;
-            }
-
-            .contact-form .form-grid {
-                display: grid;
-                gap: 1.5rem;
-            }
-
-            .form-group {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .form-label {
-                margin-bottom: 0.5rem;
-                font-size: 0.875rem;
-                font-weight: 500;
-                color: #9CA3AF;
-            }
-
-            .form-input,
-            .form-textarea {
-                display: block;
-                width: 100%;
-                background-color: #121212;
-                border: 1px solid #333333;
-                border-radius: 0.375rem;
-                padding: 0.75rem 1rem;
-                color: #ffffff;
-                transition: all 0.2s ease;
-            }
-
-            .form-input:focus,
-            .form-textarea:focus {
-                border-color: #007BFF;
-                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-                outline: none;
-            }
-
-            .form-textarea {
-                min-height: 150px;
-                resize: vertical;
-            }
-
-            .form-submit {
-                width: 100%;
-                background-color: #007BFF;
-                color: white;
-                font-weight: 600;
-                padding: 1rem 1.5rem;
-                border-radius: 0.5rem;
-                border: none;
-                cursor: pointer;
-                font-size: 1rem;
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                transition: all 0.3s ease-in-out;
-            }
-
-            .form-submit:hover {
-                background-color: #2563EB;
-                transform: translateY(-0.25rem);
-            }
-
-            @media (min-width: 640px) {
-                .contact-form .form-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-
-                .form-group-full {
-                    grid-column: 1 / -1;
-                }
-            }
-
-            /* Contact Info */
-            .contact-info__title {
-                font-size: 1.875rem;
-                font-weight: 600;
-                color: #ffffff;
-                margin-bottom: 2rem;
-            }
-
-            .contact-info__list {
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .contact-info__item {
-                display: flex;
-                gap: 1.5rem;
-                align-items: flex-start;
-            }
-
-            .contact-info__icon-wrapper {
-                flex-shrink: 0;
-                width: 2.5rem;
-                height: 2.5rem;
-                background-color: #121212;
-                border: 1px solid #333333;
-                border-radius: 0.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .contact-info__icon {
-                width: 1.25rem;
-                height: 1.25rem;
-                color: #007BFF;
-            }
-
-            .contact-info__label {
-                font-weight: 600;
-                color: #ffffff;
-            }
-
-            .contact-info__value {
-                margin-top: 0.25rem;
-                color: #9CA3AF;
-                transition: color 0.3s ease;
-            }
-
-            .contact-info__value:hover {
-                color: #007BFF;
-            }
-
-            .contact-info__social-links {
-                margin-top: 3rem;
-                display: flex;
-                gap: 1rem;
-            }
-
-            .contact-info__social-link {
-                color: #9CA3AF;
-                transition: color 0.3s ease;
-            }
-
-            .contact-info__social-link:hover {
-                color: #ffffff;
-            }
-
-            .contact-info__social-icon {
-                height: 1.5rem;
-                width: 1.5rem;
-            }
-
-            /* Map Section */
-            .map-section {
-                margin-top: 5rem;
-            }
-
-            .map-wrapper {
-                aspect-ratio: 16 / 9;
-                width: 100%;
-                border-radius: 1rem;
-                overflow: hidden;
-                border: 1px solid #333333;
-            }
-
-            .map-wrapper iframe {
-                width: 100%;
-                height: 100%;
-                border: 0;
-                filter: invert(90%) grayscale(100%);
-                /* Inverts colors for a dark theme map */
-            }
-
-            /* Footer (reused) */
-            .site-footer {
-                background-color: #1E1E1E;
-                border-top: 1px solid #333333;
-            }
-
-            .site-footer__main {
-                padding: 3rem 0;
-            }
-
-            .site-footer__grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-
-            .site-footer__brand-area {
-                grid-column: span 2 / span 2;
-            }
-
-            .site-footer__brand-name {
-                font-size: 1.5rem;
-                font-weight: 700;
-                color: #ffffff;
-            }
-
-            .site-footer__brand-tagline {
-                margin-top: 0.5rem;
-                font-size: 0.875rem;
-                color: #9CA3AF;
-            }
-
-            .site-footer__nav-title {
-                font-size: 0.875rem;
-                font-weight: 600;
-                color: #9CA3AF;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-            }
-
-            .site-footer__nav-list {
-                margin-top: 1rem;
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .site-footer__nav-link,
-            .site-footer__contact-link {
-                color: #D1D5DB;
-                transition: color 0.3s ease;
-            }
-
-            .site-footer__nav-link:hover,
-            .site-footer__contact-link:hover {
-                color: #ffffff;
-            }
-
-            .site-footer__social-links {
-                margin-top: 1rem;
-                display: flex;
-                gap: 1rem;
-            }
-
-            .site-footer__social-link {
-                color: #9CA3AF;
-                transition: color 0.3s ease;
-            }
-
-            .site-footer__social-link:hover {
-                color: #ffffff;
-            }
-
-            .site-footer__social-icon {
-                height: 1.5rem;
-                width: 1.5rem;
-            }
-
-            .site-footer__bottom-bar {
-                margin-top: 2rem;
-                border-top: 1px solid #333333;
-                padding-top: 2rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 0.875rem;
-                color: #9CA3AF;
-            }
-
-            .site-footer__bottom-link:hover {
-                color: #ffffff;
-            }
-
-            @media (min-width: 768px) {
-                .site-footer__grid {
-                    grid-template-columns: repeat(4, 1fr);
-                }
-
-                .site-footer__brand-area {
-                    grid-column: span 2 / span 2;
-                }
-
-                .site-footer__nav-group--socials {
-                    grid-column-start: 4;
-                }
-            }
-
-            @media (min-width: 1024px) {
-                .site-footer__grid {
-                    grid-template-columns: repeat(5, 1fr);
-                }
-
-                .site-footer__brand-area {
-                    grid-column: span 1 / span 1;
-                }
-
-                .site-footer__nav-group--socials {
-                    grid-column-start: 5;
-                }
-            }
-        </style>
-        <link rel="stylesheet" href="assets/css/navigation.css">
-        <script src="assets/js/navigation.js"></script>
-    </head>
-
-    <body>
-        <header class="site-header">
-            <div class="container site-header__container">
-                <a href="index.html" class="site-header__brand">NEXORA</a>
-                <nav class="site-header__nav">
-                    <ul class="site-header__nav-list">
-                        <li><a href="about.html" class="site-header__nav-link">About</a></li>
-                        <li><a href="services.html" class="site-header__nav-link">Services</a></li>
-                        <li><a href="work.html" class="site-header__nav-link">Work</a></li>
-                        <li><a href="insights.html" class="site-header__nav-link">Insights</a></li>
-                        <li><a href="contact.html" class="site-header__nav-link site-header__nav-link--cta">Contact</a></li>
-                    </ul>
-                </nav>
-                <button class="site-header__mobile-menu-button" aria-label="Open navigation menu">
-                    <svg class="site-header__mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                </button>
-            </div>
-        </header>
-
-        <main>
-            <section class="section">
-                <div class="container">
-                    <header class="section-header animate-on-scroll">
-                        <h1 class="section-header__title">Let's Start a Conversation</h1>
-                        <p class="section-header__subtitle">We're here to answer your questions, discuss your project, or explore how we can work together. Reach out, and we'll get back to you within one business day.</p>
-                    </header>
-
-                    <div class="contact-layout animate-on-scroll">
-                        <div class="contact-form">
-                            <h2 class="contact-form__title">Send Us a Message</h2>
-                            <form action="#" method="POST">
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Full Name</label>
-                                        <input type="text" id="name" name="name" required class="form-input">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">Work Email</label>
-                                        <input type="email" id="email" name="email" required class="form-input">
-                                    </div>
-                                    <div class="form-group form-group-full">
-                                        <label for="company" class="form-label">Company Name (Optional)</label>
-                                        <input type="text" id="company" name="company" class="form-input">
-                                    </div>
-                                    <div class="form-group form-group-full">
-                                        <label for="message" class="form-label">Message</label>
-                                        <textarea id="message" name="message" required class="form-textarea" placeholder="Tell us about your project..."></textarea>
-                                    </div>
-                                    <div class="form-group-full">
-                                        <button type="submit" class="form-submit">Send Message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="contact-info">
-                            <h2 class="contact-info__title">Contact Details</h2>
-                            <ul class="contact-info__list">
-                                <li class="contact-info__item">
-                                    <div class="contact-info__icon-wrapper">
-                                        <svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="contact-info__label">Email Us</p>
-                                        <a href="mailto:hello@nexora.com" class="contact-info__value">hello@nexora.com</a>
-                                    </div>
+    <main>
+        <section class="main-content-section">
+            <div class="container">
+                <div class="contact-card animate-on-scroll">
+                    <div class="contact-card__left">
+                        <div class="contact-card__content">
+                            <h2 class="contact-card__title">Let's Start a Conversation</h2>
+                            <p class="contact-card__subtitle">We're here to answer your questions, discuss your project, or explore how we can work together.</p>
+                            <h3 class="contact-card__services-title">Our Services</h3>
+                            <ul class="contact-card__services-list">
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="contact-card__checkmark"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clip-rule="evenodd" /></svg>
+                                    <span>Strategic Design</span>
                                 </li>
-                                <li class="contact-info__item">
-                                    <div class="contact-info__icon-wrapper">
-                                        <svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="contact-info__label">Call Us</p>
-                                        <a href="tel:+1234567890" class="contact-info__value">(123) 456-7890</a>
-                                    </div>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="contact-card__checkmark"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clip-rule="evenodd" /></svg>
+                                    <span>Precision Engineering</span>
                                 </li>
-                                <li class="contact-info__item">
-                                    <div class="contact-info__icon-wrapper">
-                                        <svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="contact-info__label">Our Office</p>
-                                        <p class="contact-info__value">123 Innovation Drive, Tech City, 12345</p>
-                                    </div>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="contact-card__checkmark"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clip-rule="evenodd" /></svg>
+                                    <span>Growth-Focused SEO</span>
                                 </li>
                             </ul>
-                            <div class="contact-info__social-links">
-                                <a href="#" class="contact-info__social-link" aria-label="Twitter"><svg class="contact-info__social-icon" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                                    </svg></a>
-                                <a href="#" class="contact-info__social-link" aria-label="LinkedIn"><svg class="contact-info__social-icon" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" />
-                                    </svg></a>
+                        </div>
+                        <div class="contact-card__socials">
+                            <div class="contact-card__social-links">
+                                <a href="https://www.instagram.com/nexora_web_agency/" class="contact-card__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.012-3.584.07-4.85c.148-3.225 1.664-4.771 4.919-4.919C8.356 2.175 8.741 2.163 12 2.163m0-2.163C8.741 0 8.356.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.355 0 8.741 0 12s.014 3.645.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.645.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+                                </a>
+                                <a href="https://www.linkedin.com/in/nexora-web-agency-353b10370" class="contact-card__social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                </a>
                             </div>
                         </div>
                     </div>
 
-
+                    <div class="contact-card__right">
+                        <h2 class="contact-form-v2__title">Get In Touch</h2>
+                        <p class="contact-form-v2__subtitle">We will get back to you soon!</p>
+                        <form action="#" method="POST" class="contact-form-v2">
+                            <div class="contact-form-v2__grid">
+                                <div class="form-group">
+                                    <label for="firstname" class="form-label">First Name</label>
+                                    <input type="text" id="firstname" name="firstname" required class="form-input" placeholder="Enter your first name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname" class="form-label">Last Name</label>
+                                    <input type="text" id="lastname" name="lastname" required class="form-input" placeholder="Enter your last name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" id="email" name="email" required class="form-input" placeholder="hello@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class="form-label">Company Name</label>
+                                <input type="text" id="company" name="company" class="form-input" placeholder="Enter you company name">
+                            </div>
+                             <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="comments" class="form-label">Message</label>
+                                <textarea id="comments" name="comments" class="form-textarea" placeholder="Let us know how we can help"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-submit-v2">Send</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </section>
-        </main>
-  <!-- FOOTER SECTION -->
+            </div>
+        </section>
+    </main>
+
+     <!-- FOOTER SECTION -->
        <footer class="site-footer-v2-simplified">
     <div class="container">
         <div class="footer-v2__main-section">
@@ -593,25 +404,25 @@
         </div>
     </div>
 </footer>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const animatedElements = document.querySelectorAll('.animate-on-scroll');
-                if ("IntersectionObserver" in window) {
-                    const observer = new IntersectionObserver((entries, observer) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('is-visible');
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    }, { threshold: 0.1 });
-                    animatedElements.forEach(el => observer.observe(el));
-                } else {
-                    animatedElements.forEach(el => el.classList.add('is-visible'));
-                }
-            });
-        </script>
-    </body>
-
+    
+    <script src="/assets/js/navigation.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedElements.forEach(el => observer.observe(el));
+            } else {
+                animatedElements.forEach(el => el.classList.add('is-visible'));
+            }
+        });
+    </script>
+</body>
 </html>
